@@ -1,0 +1,14 @@
+# Sphinx build outputs
+docs/_build/
+_build/
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+scripts/midas_videos_cache.json
+docs/_toc.generated.txt
