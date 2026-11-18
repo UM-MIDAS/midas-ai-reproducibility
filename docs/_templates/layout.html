@@ -1,0 +1,67 @@
+{% extends "!layout.html" %}
+
+{#
+  TODO before launch:
+  - Add a Google Analytics ID for this book (do not reuse the AI in Research ID).
+  - Replace FEEDBACK_FORM_URL with this book's feedback form.
+  - Create a GitHub Discussions category for this repo and fill in the giscus
+    data-repo-id / data-category-id values (see https://giscus.app).
+#}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    // Accessibility: the theme marks sidebar captions as headings without a level
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[role="heading"]:not([aria-level])')
+        .forEach(function (el) { el.setAttribute('aria-level', '2'); });
+      // Let keyboard users focus code blocks so they can scroll them sideways
+      document.querySelectorAll('div.highlight pre')
+        .forEach(function (el) { el.setAttribute('tabindex', '0'); });
+      // Give checklist checkboxes an accessible name taken from their list item
+      document.querySelectorAll('input.task-list-item-checkbox')
+        .forEach(function (el) {
+          el.setAttribute('aria-label', el.parentElement.textContent.trim());
+        });
+    });
+    // The theme's own script wraps wide tables in a scrollable box; make each
+    // box keyboard-focusable whenever it appears
+    new MutationObserver(function () {
+      document.querySelectorAll('div.wy-table-responsive:not([tabindex])')
+        .forEach(function (el) { el.setAttribute('tabindex', '0'); });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var content = document.querySelector('.rst-content');
+      if (!content) return;
+      var FEEDBACK_FORM_URL = '';   // TODO
+      var GISCUS_REPO_ID = '';      // TODO
+      var GISCUS_CATEGORY_ID = '';  // TODO
+
+      if (FEEDBACK_FORM_URL) {
+        content.insertAdjacentHTML('beforeend',
+          '<div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid #e1e4e8;font-size:0.9rem;color:#57606a;">'
+          + '<a href="' + FEEDBACK_FORM_URL + '" target="_blank" '
+          + 'style="display:inline-block;padding:6px 14px;background:#1D9E75;color:#fff;border-radius:4px;text-decoration:none;font-weight:500;font-size:0.85rem;">'
+          + 'Share private feedback</a>'
+          + '&nbsp;&nbsp;<span>or leave a public comment below to discuss with other readers.</span></div>');
+      }
+      if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        var w = document.createElement('div'); w.style.marginTop = '1.5rem';
+        var s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        var attrs = {
+          'data-repo': 'UM-MIDAS/midas-ai-reproducibility', // TODO confirm repo
+          'data-repo-id': GISCUS_REPO_ID, 'data-category': 'General',
+          'data-category-id': GISCUS_CATEGORY_ID, 'data-mapping': 'pathname',
+          'data-strict': '0', 'data-reactions-enabled': '0', 'data-emit-metadata': '0',
+          'data-input-position': 'bottom', 'data-theme': 'preferred_color_scheme',
+          'data-lang': 'en', 'crossorigin': 'anonymous'
+        };
+        for (var k in attrs) s.setAttribute(k, attrs[k]);
+        s.async = true; w.appendChild(s); content.appendChild(w);
+      }
+    });
+  </script>
+{% endblock %}

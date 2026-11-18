@@ -1,0 +1,25 @@
+/* accessibility.css: contrast and link fixes for sphinx_rtd_theme (WCAG 2.1 AA).
+   Each color pair was checked with the contrast function in Chapter 23. */
+
+/* Links: 5.3:1 on the page background, and underlined in body text */
+.rst-content a, .rst-content a:visited, .wy-breadcrumbs a { color: #1f6fa3; }
+.rst-content p a, .rst-content li a, .rst-content dd a { text-decoration: underline; }
+
+/* Admonition title bars: white text needs darker backgrounds.
+   The generic rule comes first so the specific ones below override it. */
+.rst-content .admonition .admonition-title,
+.rst-content .note .admonition-title, .rst-content .seealso .admonition-title { background: #2c6e9b; }  /* 5.51:1 */
+.rst-content .tip .admonition-title, .rst-content .hint .admonition-title,
+.rst-content .important .admonition-title { background: #117a65; }      /* 5.26:1 */
+.rst-content .warning .admonition-title, .rst-content .caution .admonition-title,
+.rst-content .attention .admonition-title { background: #a0522d; }      /* 5.62:1 */
+.rst-content .danger .admonition-title, .rst-content .error .admonition-title { background: #b03a2e; }
+
+/* Inline code and footnote text */
+.rst-content code.literal, .rst-content tt.literal { color: #c0392b; }  /* 5.44:1 */
+
+.rst-content aside.footnote-list p, footer, footer p { color: #404040; }   /* 10.4:1 */
+.rst-content aside.footnote-list a, footer a { text-decoration: underline; }
+
+/* Sidebar search header: white title text on a darker blue */
+.wy-side-nav-search, .wy-nav-top { background: #1f6fa3; }
